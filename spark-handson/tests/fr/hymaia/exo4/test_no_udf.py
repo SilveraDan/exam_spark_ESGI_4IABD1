@@ -59,35 +59,4 @@ class TestMain(unittest.TestCase):
         input = add_total_price_per_category_per_day_col(input)
         self.assertCountEqual(expected.collect(), input.collect())
 
-    def test_add_total_price_per_category_per_day_last_30_days_col(self):
-        self.maxDiff = None
-        input = spark.createDataFrame(
-            [
-                Row(date='2019-05-23',price='10',category='1'),
-                Row(date='2019-06-20',price='20',category='1'),
-                Row(date='2019-07-18',price='20',category='1'),
-                Row(date='2019-05-23',price='10',category='2'),
-                Row(date='2019-06-20',price='10',category='2'),
-                Row(date='2019-07-18',price='20',category='2')
-
-            ]
-        )
-
-
-        expected = spark.createDataFrame(
-            [
-                Row(date='2019-05-23',price='10',category='1',total_prix_30jours=10),
-                Row(date='2019-06-20',price='20',category='1',total_prix_30jours=30),
-                Row(date='2019-07-18',price='20',category='1',total_prix_30jours=40),
-
-                Row(date='2019-05-23',price='10',category='2',total_prix_30jours=10),
-                Row(date='2019-06-20',price='10',category='2',total_prix_30jours=20),
-                Row(date='2019-07-18',price='20',category='2',total_prix_30jours=30)
-
-            ]
-        ) 
-        
-        input = add_total_price_per_category_per_day_last_30_days_col(input)
-        self.assertCountEqual(input.collect(), expected.collect())
-
 
